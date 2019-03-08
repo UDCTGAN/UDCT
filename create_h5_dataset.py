@@ -1,12 +1,9 @@
 #!/usr/bin/python
 
 import numpy as np
-import matplotlib.pyplot as plt
 import h5py
 import cv2
 import os
-import imageio as io
-from scipy.misc import imresize
 import sys
 
 def get_file_list(data_path):
