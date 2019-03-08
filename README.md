@@ -5,8 +5,9 @@ Our results can be found at https://www.biorxiv.org/content/biorxiv/early/2019/0
 
 ## How to use
 1. Clone or download the repository
-2. Create a synthetic dataset similar to your real dataset
-3. Go to ./notebooks/ and create the .h5 file with create_dataset_h5.ipynb
-4. cd ../ and execute python main.py --datasets=./Data/..../h5file.h5
+2. Create a synthetic dataset similar to your real dataset or use example dataset in ./Data/Example
+3. Exectute: <pre>python create_h5_dataset.py &lt;directory_of_raw_images&gt; &lt;directory_of_syn_images&gt; &lt;filename_of_hdf5_file&gt;  </pre><br />
+   Example: <pre>python create_h5_dataset.py ./Data/Example/Genuine/ \\<br />./Data/Example/Synthetic/ ./Data/Example/example_dataset.h5</pre>
+4. Execute: <pre> python main.py --dataset='./Data/..../dataset.h5' </pre>
 5. This will create a network that is saved in ./Models along with a parameter textfile. To evaluate the results, launch visualize_results.ipynb
 ### Parameters:
