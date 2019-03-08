@@ -88,7 +88,6 @@ if __name__ == "__main__":
         lambda_c=var_dict['lambda_c'],\
         lambda_h=var_dict['lambda_h'],\
         deconv=var_dict['deconv'],\
-        attention=var_dict['attention'],\
         patchgan=var_dict['PatchGAN'],\
         verbose=(var_dict['verbose']!=0),\
         gen_only=gen_only)
