@@ -445,6 +445,12 @@ class Model:
                		#print(cyc_B.shape)
 
                 if iteration%5==0:
+                    print(images_a.shape)
+                    print(images_b.shape)
+                    print(im_fake_A.shape)
+                    print(im_fake_B.shape)
+                    print(cyc_A.shape)
+                    print(cyc_B.shape)
                     sneak_peak=Utilities.produce_tiled_images(images_a,images_b,im_fake_A, im_fake_B,cyc_A,cyc_B)
                         
                     cv2.imshow("",sneak_peak[:,:,[2,1,0]])
