@@ -9,11 +9,11 @@ Our results can be found at https://www.biorxiv.org/content/biorxiv/early/2019/0
 3. Exectute: <pre>python create_h5_dataset.py &lt;directory_of_raw_images&gt; &lt;directory_of_syn_images&gt; &lt;filename_of_hdf5_file&gt;  </pre>
    Example: <pre>python create_h5_dataset.py ./Data/Example/Genuine/ \\<br />./Data/Example/Synthetic/ ./Data/Example/example_dataset.h5</pre>
 4. Create the directory 'Models' in the root directory
-5. Execute: <pre> python main.py --dataset='./Data/..../dataset.h5' --name='name_of_model' </pre>
-   Example: <pre> python main.py --dataset='./Data/Example/example_dataset.h5' --name='example_model' </pre>
+5. Execute: <pre> python main.py --dataset=./Data/..../dataset.h5 --name=name_of_model </pre>
+   Example: <pre> python main.py --dataset=./Data/Example/example_dataset.h5 --name=example_model </pre>
 6. This will create a network that is saved in ./Models/ along with a parameter textfile. Furthermore, the average loss terms for each epoch are saved in this directory.
 7. To generate the results after training, use:
-   <pre> python main.py --dataset='./Data/Example/example_dataset.h5' --name='example_model' --mode='gen_B' </pre>
+   <pre> python main.py --dataset=./Data/Example/example_dataset.h5 --name=example_model --mode=gen_B </pre>
    The generated synthetic images can be found in ./Models/&lt;name_of_model&gt;_gen_B.h5
    
 ### Parameters

@@ -119,14 +119,14 @@ class Model:
             
             # Create the generator and discriminator
             if self.architecture == 'Res6':
-				gen_dim =    [64,   128,256,   256,256,256,256,256,256,   128,64     ]
-				kernel_size =[7,    3,3,       3,3,3,3,3,3,               3,3,      7]
+                                gen_dim =    [64,   128,256,   256,256,256,256,256,256,   128,64     ]
+                                kernel_size =[7,    3,3,       3,3,3,3,3,3,               3,3,      7]
             elif self.architecture == 'Res9':
-				gen_dim=    [64,   128,256,   256,256,256,256,256,256,256,256,256,   128,64    ]
-				kernel_size=[7,    3,3,       3,3,3,3,3,3,3,3,3,                     3,3,     7]
+                                gen_dim=    [64,   128,256,   256,256,256,256,256,256,256,256,256,   128,64    ]
+                                kernel_size=[7,    3,3,       3,3,3,3,3,3,3,3,3,                     3,3,     7]
             else:
-				print('Unknown generator architecture')
-				return None
+                                print('Unknown generator architecture')
+                                return None
             
             self.genA           = Res_Gen.ResGen('BtoA',self.a_chan,gen_dim=gen_dim,kernel_size=kernel_size,deconv=self.deconv,verbose=self.verbose)
             self.genB           = Res_Gen.ResGen('AtoB',self.b_chan,gen_dim=gen_dim,kernel_size=kernel_size,deconv=self.deconv,verbose=self.verbose)
@@ -144,8 +144,8 @@ class Model:
                 self.disA       = MultiPatch.MultiPatch('A',noise=self.dis_noise)
                 self.disB       = MultiPatch.MultiPatch('B',noise=self.dis_noise)
             else:
-				print('Unknown Patch discriminator type')
-				return None
+                print('Unknown Patch discriminator type')
+                return None
             
             self.disA_His   = HisDis.HisDis('A',noise=self.dis_noise,keep_prob=1.)
             self.disB_His   = HisDis.HisDis('B',noise=self.dis_noise,keep_prob=1.)
@@ -427,22 +427,15 @@ class Model:
                 vec_ldfAh.append(ldfAh)
                 vec_ldfB.append(ldfB)
                 vec_ldfBh.append(ldfBh)
-                
-             	#print(np.shape(images_a))
-             	#print(np.shape(images_b))
 
                 if np.shape(images_b)[-1]==4:
 
-                	images_b=np.vstack((images_b[0,:,:,0:3],np.tile(images_b[0,:,:,3].reshape(320,320,1),[1,1,3])))
-                	im_fake_B=np.vstack((im_fake_B[0,:,:,0:3],np.tile(im_fake_B[0,:,:,3].reshape(320,320,1),[1,1,3])))
-                	cyc_B=np.vstack((cyc_B[0,:,:,0:3],np.tile(cyc_B[0,:,:,3].reshape(320,320,1),[1,1,3])))
-               	 	images_b=images_b[np.newaxis,:,:,:]
-               		im_fake_B=im_fake_B[np.newaxis,:,:,:]
-               		cyc_B=cyc_B[np.newaxis,:,:,:]
-               		#print(images_b.shape)
-               		#print(im_fake_B.shape)
-
-               		#print(cyc_B.shape)
+                    images_b=np.vstack((images_b[0,:,:,0:3],np.tile(images_b[0,:,:,3].reshape(320,320,1),[1,1,3])))
+                    im_fake_B=np.vstack((im_fake_B[0,:,:,0:3],np.tile(im_fake_B[0,:,:,3].reshape(320,320,1),[1,1,3])))
+                    cyc_B=np.vstack((cyc_B[0,:,:,0:3],np.tile(cyc_B[0,:,:,3].reshape(320,320,1),[1,1,3])))
+                    images_b=images_b[np.newaxis,:,:,:]
+                    im_fake_B=im_fake_B[np.newaxis,:,:,:]
+                    cyc_B=cyc_B[np.newaxis,:,:,:]
 
                 if iteration%5==0:
                     sneak_peak=Utilities.produce_tiled_images(images_a,images_b,im_fake_A, im_fake_B,cyc_A,cyc_B)
@@ -592,127 +585,3 @@ class Model:
             
         f.close()
         return l_rA,l_rB,l_fA,l_fB
-    
-    def save_graph(self):
-        tf.summary.FileWriter("./Models/" + self.mod_name + ".logs",graph=self.graph)
-
-    def print_gradients(self):
-        """
-        This function tests if the gradients exist and if they do, if the variable is being trained.
-        0    Gradient exists but is 0. This is probably bad
-        1    Gradient exists and is bigger than 0. It is being trained
-        2    Gradient does not exist and is not supposed to be trained
-        3    Gradient exists and is bigger than 0. It is not being trained
-        4    Gradient does not exist but it is supposed to be trained. This must not happen
-        """
-        f              = h5py.File(self.data_file,"r")
-        
-        images_a   = f['A/data'][0:1,:,:,:]
-        images_b   = f['B/data'][0:1,:,:,:]
-        
-        with tf.Session(graph=self.graph) as sess:
-            self.init(sess)
-            
-            train_var = tf.trainable_variables()
-            losses    = [self.loss_dis_A, self.loss_dis_B, self.loss_gen_A, self.loss_gen_B, self.loss_gen_A + self.loss_gen_B]
-            loss_name = ["dis_A", "dis_B", "gen_A", "gen_B", "genAB"]
-            
-            length = 0
-            for i in range(len(train_var)):
-                length = max(length,len(tf.trainable_variables()[i].name))
-            
-            length += 3
-            
-            non_zero  = np.zeros((len(train_var),len(losses)),dtype=np.int)
-            
-            for i in range(len(train_var)):
-                for j in range(len(losses)):
-                    print(i,j,train_var[i].name,loss_name[j],end='    ')
-                    try:
-                        grad = sess.run(tf.gradients(ys=losses[j],xs=train_var[i]),\
-                             feed_dict={self.A: images_a,\
-                                        self.B: images_b})
-                        if np.sum(np.abs(grad)) > 0:
-                            if j == 0 and train_var[i] in self.list_dis_A:
-                                non_zero[i,j] = 1.
-                                print(1)
-                            elif j == 1 and train_var[i] in self.list_dis_B:
-                                non_zero[i,j] = 1.
-                                print(1)
-                            elif j >= 2 and train_var[i] in self.list_gen:
-                                non_zero[i,j] = 1.
-                                print(1)
-                            else:
-                                non_zero[i,j] = 3.
-                                print(3)
-                        else:
-                            print(0)
-                    except:
-                        if j == 0 and train_var[i] in self.list_dis_A:
-                            non_zero[i,j] = 4.
-                            print(4)
-                        elif j == 1 and train_var[i] in self.list_dis_B:
-                            non_zero[i,j] = 4.
-                            print(4)
-                        elif j >= 2 and train_var[i] in self.list_gen:
-                            non_zero[i,j] = 4.
-                            print(4)
-                        else:
-                            non_zero[i,j] = 2.
-                            print(2)
-            # Print the header line
-            for i in range(length):
-                print(' ',end='')
-            for j in range(len(loss_name)):
-                print(loss_name[j],end='  ')
-            print(' ')
-            for i in range(len(train_var)):
-                print(tf.trainable_variables()[i].name,end='  ')
-                for j in range(len(tf.trainable_variables()[i].name),length):
-                    print(' ',end='')
-                for j in range(len(losses)):
-                    print(str(non_zero[i,j]),end='      ')
-                print('')
-        f.close()
-    
-    def print_count_variables(self):
-        with tf.Session(graph=self.graph):
-            count = 0
-            for var in tf.trainable_variables():
-                count = count + int(np.prod(var.shape))
-            print('Total number of trainable variables in model: ' + str(count))
-            
-        with tf.Session(graph=self.graph):
-            count = 0
-            for var in tf.trainable_variables():
-                if 'dis_A' in str(var):
-                    count = count + int(np.prod(var.shape))
-            print('Total number of trainable variables in dis_A:  ' + str(count))
-            
-        with tf.Session(graph=self.graph):
-            count = 0
-            for var in tf.trainable_variables():
-                if 'dis_B' in str(var):
-                    count = count + int(np.prod(var.shape))
-            print('Total number of trainable variables in dis_B:  ' + str(count))
-            
-        with tf.Session(graph=self.graph):
-            count = 0
-            for var in tf.trainable_variables():
-                if 'gen_BtoA' in str(var):
-                    count = count + int(np.prod(var.shape))
-            print('Total number of trainable variables in gen_A:  ' + str(count))
-            
-        with tf.Session(graph=self.graph):
-            count = 0
-            for var in tf.trainable_variables():
-                if 'gen_AtoB' in str(var):
-                    count = count + int(np.prod(var.shape))
-            print('Total number of trainable variables in gen_B:  ' + str(count))
-    
-    def print_train_and_not_train_variables(self):
-        with tf.Session(graph=self.graph):
-            count = 0
-            for var in tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES):
-                count = count + int(np.prod(var.shape))
-            print('Total number of variables (trainable + not trainable): ' + str(count))
