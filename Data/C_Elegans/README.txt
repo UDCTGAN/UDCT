@@ -1,0 +1,11 @@
+For copyright reasons, the C. elegans dataset needs to be created by downloading the data from the Broad Bioimage Bechnmark Collection.
+
+To do so, please follow the README.txt instructions in the following order:
+
+1) README.txt in Original/
+
+2) README.txt in Raw/
+
+3) README.txt in Synthetic/
+
+4) Execute in root directory: python create_h5_dataset.py ./Data/C_Elegans/Raw/ ./Data/C_Elegans/Synthetic/ ./Data/C_Elegans/c_elegans_dataset.h5
