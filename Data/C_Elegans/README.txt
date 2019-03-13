@@ -9,3 +9,5 @@ To do so, please follow the README.txt instructions in the following order:
 3) README.txt in Synthetic/
 
 4) Execute in root directory: python create_h5_dataset.py ./Data/C_Elegans/Raw/ ./Data/C_Elegans/Synthetic/ ./Data/C_Elegans/c_elegans_dataset.h5
+
+Instead, you can also execute the script 'train_UDCT_c_elegans.sh' in the directory ../Scripts. It does all these steps automatically.

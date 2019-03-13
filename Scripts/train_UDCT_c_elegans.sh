@@ -22,6 +22,7 @@ jupyter nbconvert --to notebook --execute make_synthetic_c_elegans.ipynb
 
 # Create the hdf5 file
 cd ../
+mkdir -p Models
 echo "Creating the hdf5 dataset"
 python create_h5_dataset.py ./Data/C_Elegans/Raw/ ./Data/C_Elegans/Synthetic/ ./Data/C_Elegans/c_elegans_dataset.h5
 
