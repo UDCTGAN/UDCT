@@ -83,7 +83,7 @@ def main():
         if raw_flag: # This means, the images are gray scale
             data_A[idx,:,:,0] = np.array(cv2.imread(fname,cv2.IMREAD_GRAYSCALE))
         else:
-            data_A[idx,:,:,2:0:-1] = np.array(cv2.imread(fname,cv2.IMREAD_COLOR))
+            data_A[idx,:,:,:] = np.flip(np.array(cv2.imread(fname,cv2.IMREAD_COLOR)),2)
         
     print('Genuine dataset: ', group.create_dataset(name='data', data=(data_A),dtype=dtype))
     
@@ -111,7 +111,7 @@ def main():
         if syn_flag: # This means, the images are gray scale
             data_B[idx,:,:,0] = np.array(cv2.imread(fname,cv2.IMREAD_GRAYSCALE))
         else:
-            data_B[idx,:,:,2:0:-1] = np.array(cv2.imread(fname,cv2.IMREAD_COLOR))
+            data_B[idx,:,:,:] = np.flip(np.array(cv2.imread(fname,cv2.IMREAD_COLOR)),2)
         
     print('Synthetic dataset: ', group.create_dataset(name='data', data=(data_B),dtype=dtype))
     
