@@ -1,3 +1,6 @@
+Disclaimer: 'We used the C.elegans infection live/dead image set version 1 provided by Fred Ausubel and available from the Broad Bioimage Benchmark Collection [Ljosa et al., Nature Methods, 2012].'
+https://data.broadinstitute.org/bbbc/BBBC010/
+
 For copyright reasons, the C. elegans dataset needs to be created by downloading the data from the Broad Bioimage Bechnmark Collection.
 
 To do so, please follow the README.txt instructions in the following order:
