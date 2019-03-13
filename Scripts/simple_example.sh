@@ -2,7 +2,7 @@
 
 # Create the sample dataset
 cd ..
-python create_h5_dataset.py ./Data/Example/Genuine/ ./Data/Example/Synthetic/ ./Data/Example/example_dataset.h5 --ExecutePreprocessor.timeout=1800
+python create_h5_dataset.py ./Data/Example/Genuine/ ./Data/Example/Synthetic/ ./Data/Example/example_dataset.h5
 
 # Create a Directory for model data
 mkdir -p Models

@@ -10,7 +10,7 @@ echo "Creating the raw dataset"
 mkdir -p ../Data/Neuron_Dead_Live/Raw
 cd ../Data/Neuron_Dead_Live/Raw/
 wget https://downloads.lbb.ethz.ch/Data/lbb_raw_images.h5
-cd ../../../../notebooks/
+cd ../../../notebooks/
 jupyter nbconvert --to notebook --execute make_raw_dead_live_neurons.ipynb --ExecutePreprocessor.timeout=1800
 
 # Create the hdf5 file
