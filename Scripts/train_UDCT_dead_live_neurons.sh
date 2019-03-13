@@ -3,7 +3,7 @@
 # Create the synthetic images for both live_vs_dead and colored_live neuron datasets
 cd ../notebooks/
 echo "Creating the synthetic dataset"
-jupyter nbconvert --to notebook --execute make_syntetic_livedead_neurons_and_colored.ipynb --ExecutePreprocessor.timeout=1800
+jupyter nbconvert --to notebook --execute make_synthetic_livedead_neurons_and_colored.ipynb --ExecutePreprocessor.timeout=1800
 
 # Create the raw dataset
 echo "Creating the raw dataset"
