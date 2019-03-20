@@ -6,7 +6,7 @@ mkdir -p ../Data/Nanowire/Raw
 cd ../Data/Nanowire/Raw/
 wget https://downloads.lbb.ethz.ch/Data/lbb_raw_nanowire_images.h5
 cd ../../../notebooks/
-jupyter nbconvert --to notebook --execute make_raw_nanowires.ipynb --ExecutePreprocessor.timeout=1800
+jupyter nbconvert --to notebook --execute make_raw_nanowire.ipynb --ExecutePreprocessor.timeout=1800
 
 # Create the synthetic images
 mkdir -p ../Data/Nanowire/Synthetic
