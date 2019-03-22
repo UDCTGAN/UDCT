@@ -6,7 +6,7 @@ Our results can be found at https://www.biorxiv.org/content/biorxiv/early/2019/0
 ## How to use
 1. Clone or download the repository
 2. Create a synthetic dataset similar to your real dataset or use example dataset in ./Data/Example
-3. Exectute: <pre>python create_h5_dataset.py &lt;directory_of_raw_images&gt; &lt;directory_of_syn_images&gt; &lt;filename_of_hdf5_file&gt;  </pre>
+3. Execute: <pre>python create_h5_dataset.py &lt;directory_of_raw_images&gt; &lt;directory_of_syn_images&gt; &lt;filename_of_hdf5_file&gt;  </pre>
    Example: <pre>python create_h5_dataset.py ./Data/Example/Genuine/ \\<br />./Data/Example/Synthetic/ ./Data/Example/example_dataset.h5</pre>
 4. Create the directory 'Models' in the root directory
 5. Execute: <pre> python main.py --dataset=./Data/..../dataset.h5 --name=name_of_model </pre>
